@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0D1B2A] text-[#94a3b8]">
+    <footer className="theme-footer text-[#94a3b8]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-[#1a3a8f] rounded-lg flex items-center justify-center">
-                <Code2 size={20} className="text-cyan-400" />
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center btn-primary">
+                <Code2 size={20} className="text-white" />
               </div>
               <div>
                 <div className="text-white font-semibold text-sm">구자성 IT</div>
@@ -44,15 +44,15 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4 text-sm">연락처</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
-                <Phone size={14} className="text-[#2452c4] shrink-0" />
+                <Phone size={14} className="theme-primary-text shrink-0" />
                 <span>010-0000-0000</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={14} className="text-[#2452c4] shrink-0" />
+                <Mail size={14} className="theme-primary-text shrink-0" />
                 <span>wkjd05@gmail.com</span>
               </li>
               <li className="flex items-start gap-2">
-                <MapPin size={14} className="text-[#2452c4] shrink-0 mt-0.5" />
+                <MapPin size={14} className="theme-primary-text shrink-0 mt-0.5" />
                 <span>주소 추가 예정</span>
               </li>
             </ul>
