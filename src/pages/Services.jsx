@@ -57,38 +57,48 @@ const services = [
 export default function Services() {
   return (
     <div className="pt-16">
-      <section className="bg-gradient-to-br from-[#0D1B2A] to-[#1a2b4a] py-20">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-[#0D1B2A] to-[#1a2b4a] py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">사업분야</h1>
-          <p className="text-[#94a3b8] text-lg max-w-xl mx-auto">
+          <h1 className="text-4xl font-bold text-white mb-5">사업분야</h1>
+          <p className="text-[#94a3b8] text-lg max-w-xl mx-auto leading-relaxed">
             IT 전 분야 원스톱 토탈 서비스
           </p>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+      {/* Service Cards */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16">
           {services.map((svc) => (
-            <div key={svc.title} className={`rounded-2xl border ${svc.border} overflow-hidden`}>
-              <div className={`${svc.bg} p-8`}>
-                <div className="flex items-start gap-5">
-                  <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
-                    <svc.icon size={28} className={svc.color} />
+            <div key={svc.title} className={`rounded-2xl border ${svc.border} overflow-hidden shadow-sm`}>
+
+              {/* 카드 헤더 */}
+              <div className={`${svc.bg} px-10 py-10`}>
+                <div className="flex items-start gap-7">
+                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0 mt-1">
+                    <svc.icon size={30} className={svc.color} />
                   </div>
-                  <div>
-                    <div className="text-[#94a3b8] text-xs font-medium mb-1">{svc.subtitle}</div>
-                    <h2 className="text-2xl font-bold text-[#0D1B2A] mb-2">{svc.title}</h2>
-                    <p className="text-[#64748b] text-sm leading-relaxed max-w-2xl">{svc.desc}</p>
+                  <div className="flex-1">
+                    <div className="text-[#94a3b8] text-xs font-semibold tracking-widest uppercase mb-2">
+                      {svc.subtitle}
+                    </div>
+                    <h2 className="text-2xl font-bold text-[#0D1B2A] mb-4">{svc.title}</h2>
+                    <p className="text-[#4b5563] text-base leading-loose max-w-2xl">{svc.desc}</p>
                   </div>
                 </div>
               </div>
-              <div className="p-8 bg-white">
-                <h3 className="text-[#0D1B2A] font-semibold mb-4 text-sm">제공 서비스</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+              {/* 제공 서비스 목록 */}
+              <div className="px-10 py-10 bg-white">
+                <h3 className="text-[#0D1B2A] font-bold mb-6 text-sm tracking-wide uppercase text-[#94a3b8]">
+                  제공 서비스
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-6">
                   {svc.items.map((item) => (
-                    <div key={item} className="flex items-center gap-2">
-                      <CheckCircle size={16} className={svc.color} />
-                      <span className="text-[#1e293b] text-sm">{item}</span>
+                    <div key={item} className="flex items-center gap-3 py-1">
+                      <CheckCircle size={17} className={`${svc.color} shrink-0`} />
+                      <span className="text-[#1e293b] text-sm leading-relaxed">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -98,20 +108,24 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#f8fafc]">
+      {/* 진행 프로세스 */}
+      <section className="py-24 bg-[#f8fafc]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl font-bold text-[#0D1B2A] text-center mb-12">진행 프로세스</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold text-[#0D1B2A] mb-3">진행 프로세스</h2>
+            <p className="text-[#64748b]">처음 상담부터 사후 지원까지 함께합니다</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { step: '01', title: '상담', desc: '요구사항 및 예산 파악' },
-              { step: '02', title: '제안', desc: '최적 솔루션 및 견적 제안' },
-              { step: '03', title: '개발·납품', desc: '일정에 맞는 개발 및 납품' },
-              { step: '04', title: 'A/S', desc: '사후 지원 및 유지보수' },
+              { step: '01', title: '상담', desc: '요구사항 및 예산을 꼼꼼히 파악합니다' },
+              { step: '02', title: '제안', desc: '최적 솔루션과 견적을 제안드립니다' },
+              { step: '03', title: '개발·납품', desc: '일정에 맞춰 개발하고 납품합니다' },
+              { step: '04', title: 'A/S', desc: '납품 후에도 지속적으로 지원합니다' },
             ].map((p) => (
-              <div key={p.step} className="bg-white rounded-xl p-5 border border-[#e2e8f0] text-center">
-                <div className="text-3xl font-bold text-[#1a3a8f]/20 mb-2">{p.step}</div>
-                <h3 className="font-bold text-[#0D1B2A] mb-1">{p.title}</h3>
-                <p className="text-[#64748b] text-xs leading-relaxed">{p.desc}</p>
+              <div key={p.step} className="bg-white rounded-2xl px-6 py-8 border border-[#e2e8f0] text-center shadow-sm">
+                <div className="text-4xl font-bold text-[#1a3a8f]/15 mb-3">{p.step}</div>
+                <h3 className="font-bold text-[#0D1B2A] text-base mb-3">{p.title}</h3>
+                <p className="text-[#64748b] text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
