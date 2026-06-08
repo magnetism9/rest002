@@ -1,3 +1,5 @@
+*.png
+*.cjs
 # Logs
 logs
 *.log
