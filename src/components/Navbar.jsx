@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faXmark, faCode, faSun, faMoon, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faXmark, faCode, faSun, faMoon, faChevronRight, faChevronDown, faPalette } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
@@ -15,8 +15,18 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [paletteOpen, setPaletteOpen] = useState(false)
+  const paletteRef = useRef(null)
   const location = useLocation()
   const { paletteId, setPaletteId, isDark, toggleMode, palettes } = useTheme()
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (paletteRef.current && !paletteRef.current.contains(e.target)) setPaletteOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -60,32 +70,58 @@ export default function Navbar() {
             ))}
 
             <Link to="/contact" className="ml-3 px-4 py-2 text-white text-sm font-semibold rounded-xl flex items-center gap-2 btn-primary shadow-md">
-              상담 신청
+              프로젝트 문의
               <FontAwesomeIcon icon={faChevronRight} style={{ fontSize: '11px' }} />
             </Link>
 
             {/* 테마 컨트롤 */}
-            <div className="flex items-center gap-1.5 ml-3 pl-3 border-l border-white/15">
+            <div className="flex items-center gap-2 ml-3 pl-3 border-l border-white/15">
+
+              {/* 다크/라이트 토글 */}
               <button
                 onClick={toggleMode}
-                title={isDark ? '라이트 모드' : '다크 모드'}
+                title={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
                 className="w-8 h-8 flex items-center justify-center rounded-lg text-[#94a3b8] hover:text-white hover:bg-white/10 transition-all"
               >
                 <FontAwesomeIcon icon={isDark ? faSun : faMoon} style={{ fontSize: '14px' }} />
               </button>
-              {palettes.map((p) => (
+
+              {/* 컬러 팔레트 드롭다운 */}
+              <div className="relative" ref={paletteRef}>
                 <button
-                  key={p.id}
-                  onClick={() => setPaletteId(p.id)}
-                  title={p.name}
-                  className={`w-4 h-4 rounded-full transition-all duration-200 ${
-                    paletteId === p.id
-                      ? 'ring-2 ring-white ring-offset-1 ring-offset-transparent scale-125'
-                      : 'opacity-60 hover:opacity-100 hover:scale-110'
-                  }`}
-                  style={{ backgroundColor: p.primaryLight }}
-                />
-              ))}
+                  onClick={() => setPaletteOpen(v => !v)}
+                  title="컬러 팔레트 변경"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[#94a3b8] hover:text-white hover:bg-white/10 transition-all text-xs font-medium"
+                >
+                  <span
+                    className="w-3.5 h-3.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: palettes.find(p => p.id === paletteId)?.primaryLight }}
+                  />
+                  <FontAwesomeIcon icon={faChevronDown} style={{ fontSize: '9px' }} />
+                </button>
+
+                {paletteOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-36 rounded-xl shadow-2xl z-50 overflow-hidden"
+                       style={{ background: 'var(--c-bg-nav)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-widest text-[#64748b]">팔레트</p>
+                    {palettes.map((p) => (
+                      <button
+                        key={p.id}
+                        onClick={() => { setPaletteId(p.id); setPaletteOpen(false) }}
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm transition-all hover:bg-white/8"
+                        style={{ color: paletteId === p.id ? 'white' : '#94a3b8', fontWeight: paletteId === p.id ? 600 : 400 }}
+                      >
+                        <span className="w-4 h-4 rounded-full flex-shrink-0 ring-1 ring-white/20"
+                              style={{ backgroundColor: p.primaryLight }} />
+                        {p.name}
+                        {paletteId === p.id && (
+                          <span className="ml-auto text-white opacity-80" style={{ fontSize: '10px' }}>✓</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
